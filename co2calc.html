@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CO2 Emitter Calculator</title>
+    <style>
+        /* Add your CSS styles here as provided in co2calc.css */
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f7f7f7;
+          padding: 20px;
+        }
+
+        h1 {
+          text-align: center;
+          color: #333;
+        }
+
+        form {
+          max-width: 400px;
+          margin: 0 auto;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+          display: block;
+          margin-bottom: 10px;
+          color: #333;
+        }
+
+        input[type="number"],
+        select {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+        }
+
+        button[type="submit"] {
+          display: block;
+          width: 100%;
+          padding: 10px;
+          background-color: #333;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+
+        #result {
+          margin-top: 20px;
+        }
+    </style>
+    <script>
+        // Add your JavaScript functions here as provided in co2calc.js
+// Helper function to get the CO2 factor based on the fuel type
+function getFuelCO2Factor(fuelType) {
+    switch (fuelType) {
+        case "gasoline":
+            return 2.31; // CO2 factor for gasoline in kg per liter
+        case "diesel":
+            return 2.68; // CO2 factor for diesel in kg per liter
+        case "electric":
+            return 0; // No CO2 emissions for electric vehicles
+        default:
+            return 0;
+    }
+}
+
+function calculateCO2() {
+  // Get the values from the form inputs
+  var distance = parseInt(document.getElementById("distance").value);
+  var fuelEfficiency = parseInt(document.getElementById("fuel-efficiency").value);
+  var fuelType = document.getElementById("fuel-type").value;
+
+  // Calculate the CO2 emissions based on the formula
+  var co2Emissions = (distance / fuelEfficiency) * getFuelCO2Factor(fuelType);
+
+  // Display the result in the result div
+  document.getElementById("result").innerText = "CO2 Emissions: " + co2Emissions + " kg";
+}
+        // Helper function to get the CO2 factor based on the fuel type
+        function getFuelCO2Factor(fuelType) {
+            switch (fuelType) {
+                case "gasoline":
+                    return 2.31;
+                case "diesel":
+                    return 2.68;
+                case "electric":
+                    return 0;
+                default:
+                    return 0;
+            }
+        }
+
+        // Function to calculate CO2
+        function calculateCO2() {
+            var distance = parseInt(document.getElementById("distance").value);
+            var fuelEfficiency = parseInt(document.getElementById("fuel-efficiency").value);
+            var fuelType = document.getElementById("fuel-type").value;
+            var co2Emissions = (distance / fuelEfficiency) * getFuelCO2Factor(fuelType);
+            document.getElementById("result").innerText = "CO2 Emissions: " + co2Emissions + " kg";
+        }
+    </script>
+</head>
+<body>
+    <h1>CO2 Emitter Calculator</h1>
+    <form onsubmit="event.preventDefault(); calculateCO2();">
+        <label>Distance (km):</label>
+        <input type="number" id="distance" required>
+        <label>Fuel Efficiency (km/l):</label>
+        <input type="number" id="fuel-efficiency" required>
+        <label>Fuel Type:</label>
+        <select id="fuel-type" required>
+            <option value="gasoline">Gasoline</option>
+            <option value="diesel">Diesel</option>
+            <option value="electric">Electric</option>
+        </select>
+        <button type="submit">Calculate</button>
+    </form>
+    <div id="result"></div>
+</body>
+</html>
